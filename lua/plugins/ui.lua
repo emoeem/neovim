@@ -100,6 +100,8 @@ return {
 
       vim.keymap.set("n", "[b", ":BufferLineCyclePrev<CR>", { desc = "缓冲区：上一个" })
       vim.keymap.set("n", "]b", ":BufferLineCycleNext<CR>", { desc = "缓冲区：下一个" })
+      vim.keymap.set("n", "<leader>bp", ":BufferLineCyclePrev<CR>", { desc = "缓冲区：上一个" })
+      vim.keymap.set("n", "<leader>bn", ":BufferLineCycleNext<CR>", { desc = "缓冲区：下一个" })
     end,
   },
 
