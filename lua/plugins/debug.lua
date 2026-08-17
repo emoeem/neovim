@@ -50,23 +50,23 @@ return {
         if vim.fn.isdirectory(dir) == 0 then
           return nil
         end
-        local handle = vim.loop.fs_scandir(dir)
+        local handle = vim.uv.fs_scandir(dir)
         if not handle then
           return nil
         end
         while true do
-          local name = vim.loop.fs_scandir_next(handle)
+          local name = vim.uv.fs_scandir_next(handle)
           if not name then
             break
           end
           local full = dir .. "/" .. name
-          local stat = vim.loop.fs_stat(full)
+          local stat = vim.uv.fs_stat(full)
           if stat and stat.type == "file" and stat.nlink > 0 then
             -- crude ELF check: read first 4 bytes
-            local fd = vim.loop.fs_open(full, "r", 438)
+            local fd = vim.uv.fs_open(full, "r", 438)
             if fd then
-              local buf = vim.loop.fs_read(fd, 4, 0)
-              vim.loop.fs_close(fd)
+              local buf = vim.uv.fs_read(fd, 4, 0)
+              vim.uv.fs_close(fd)
               if buf and buf:sub(1, 4) == "\127ELF" then
                 return full
               end
@@ -132,7 +132,7 @@ return {
             end
             return vim.fn.input("Binary: ", build_dir .. "/", "file")
           end,
-          cwd = "${workspaceFolder}",
+          cwd = vim.fn.getcwd(),
           stopOnEntry = true,
         },
       }
@@ -172,7 +172,7 @@ return {
             )
           end,
 
-          cwd = "${workspaceFolder}",
+          cwd = vim.fn.getcwd(),
           stopOnEntry = false,
         },
       }
@@ -187,10 +187,10 @@ return {
         dapui.close()
       end
 
-      vim.keymap.set("n", "<F5>", dap.continue, { desc = "调试：启动/继续" })
-      vim.keymap.set("n", "<F10>", dap.step_over, { desc = "调试：单步跳过" })
-      vim.keymap.set("n", "<F11>", dap.step_into, { desc = "调试：单步进入" })
-      vim.keymap.set("n", "<F12>", dap.step_out, { desc = "调试：单步退出" })
+      vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "调试：启动/继续" })
+      vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "调试：单步跳过" })
+      vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "调试：单步进入" })
+      vim.keymap.set("n", "<leader>dx", dap.step_out, { desc = "调试：单步退出" })
       vim.keymap.set("n", "<leader>dk", dap.toggle_breakpoint, { desc = "调试：切换断点" })
       vim.keymap.set("n", "<leader>dK", function() dap.set_breakpoint(vim.fn.input("断点条件：")) end, { desc = "调试：设置条件断点" })
       vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "调试：打开REPL" })

@@ -121,18 +121,10 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      "onsails/lspkind.nvim",
     },
     config = function()
       local cmp     = require("cmp")
       local luasnip = require("luasnip")
-      local lspkind = require("lspkind")
-
-      lspkind.init({
-        mode       = "symbol_text",
-        preset     = "default",
-        symbol_map = kind_icons,
-      })
 
       apply_highlights()
       vim.api.nvim_create_autocmd("ColorScheme", {

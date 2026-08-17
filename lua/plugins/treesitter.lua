@@ -7,11 +7,23 @@ return {
   opts = {
     ensure_installed = {
       "lua",
-      "rust"
+      "rust",
+      -- 日常语言（dart 已不使用）
+      "c",
+      "cpp",
+      "python",
+      "javascript",
+      "typescript",
+      "tsx",
+      "html",
+      "css",
+      "json",
+      "yaml",
+      "bash",
+      "markdown",
+      "markdown_inline",
     },
 
     highlight = { enable = true },
-
-    fold = { enable = true },
   },
 }

@@ -2,6 +2,8 @@ return {
   -- rainbow-delimiters.nvim: 彩虹括号插件
   "HiPhish/rainbow-delimiters.nvim",
 
+  event = "BufReadPre",
+
   dependencies = { "nvim-treesitter/nvim-treesitter" },
 
   config = function()

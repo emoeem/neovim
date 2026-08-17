@@ -1,32 +1,5 @@
 return {
 
-  -- catppuccin.nvim: Catppuccin 主题插件
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    opts = {
-      flavour = "mocha",
-      background = { light = "latte", dark = "mocha" },
-      transparent_background = false,
-      integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        telescope = { enabled = true },
-        lsp_trouble = true,
-        which_key = true,
-        indent_blankline = { enabled = true },
-        notify = true,
-      },
-    },
-    config = function(_, opts)
-      require("catppuccin").setup(opts)
-      vim.cmd.colorscheme("catppuccin")
-    end,
-  },
-
   -- lualine.nvim: 状态栏插件
   {
     "nvim-lualine/lualine.nvim",
@@ -58,39 +31,20 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "*",
+    event = "BufReadPost",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
-      local function smart_close()
-        if vim.bo.modified then
-          vim.cmd.write()
+      local function smart_close(...)
+        local bufnr = select(1, ...) or vim.fn.bufnr()
+        if vim.bo[bufnr].modified then
+          vim.api.nvim_buf_call(bufnr, function()
+            vim.cmd.write()
+          end)
         end
-
-        local current_buf = vim.fn.bufnr()
-        local buflisted = vim.fn.getbufinfo({ buflisted = 1 })
-
-        if #buflisted <= 1 then
-          vim.cmd("bdelete!")
-          vim.cmd("enew")
-          return
+        local ok = pcall(require("mini.bufremove").delete, bufnr, false)
+        if not ok then
+          vim.cmd("bdelete! " .. bufnr)
         end
-
-        local current_idx = 0
-        for i, buf in ipairs(buflisted) do
-          if buf.bufnr == current_buf then
-            current_idx = i
-            break
-          end
-        end
-
-        if current_idx > 0 then
-          if current_idx < #buflisted then
-            vim.cmd("BufferLineCycleNext")
-          else
-            vim.cmd("BufferLineCyclePrev")
-          end
-        end
-
-        vim.cmd("bdelete! " .. current_buf)
       end
 
       require("bufferline").setup({
@@ -118,8 +72,8 @@ return {
           diagnostics_update_in_insert = false,
           offsets = {
             {
-              filetype = "NvimTree",
-              text = "ShenEternity & 文件树",
+              filetype = "snacks_explorer",
+              text = "emo & 资源管理器",
               highlight = "Directory",
               text_align = "left",
             },
@@ -146,11 +100,11 @@ return {
       vim.keymap.set("n", "<leader>bl", ":BufferLineCloseLeft<CR>", { desc = "关闭左侧buffer" })
       vim.keymap.set("n", "<leader>br", ":BufferLineCloseRight<CR>", { desc = "关闭右侧buffer" })
 
-      vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { desc = "上一个buffer" })
+      vim.keymap.set("n", "<S-j>", ":BufferLineCyclePrev<CR>", { desc = "上一个buffer" })
       vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { desc = "下一个buffer" })
 
       vim.keymap.set("n", "<leader>bh", ":BufferLineMovePrev<CR>", { desc = "向左移动buffer" })
-      vim.keymap.set("n", "<leader>bl", ":BufferLineMoveNext<CR>", { desc = "向右移动buffer" })
+      vim.keymap.set("n", "<leader>bn", ":BufferLineMoveNext<CR>", { desc = "向右移动buffer" })
     end,
   },
 
@@ -162,6 +116,7 @@ return {
       max_width = 50,
       render = "compact",
       stages = "fade",
+      background_colour = "#000000",
     },
     config = function(_, opts)
       local notify = require("notify")
@@ -176,39 +131,10 @@ return {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     "nvim-tree/nvim-web-devicons",
-    "MeanderingProgrammer/render-markdown.nvim",
+    -- "MeanderingProgrammer/render-markdown.nvim",  -- 已替换为 markview.nvim
   },
 
 
-  -- dashboard-nvim: 启动界面插件
-  {
-    "nvimdev/dashboard-nvim",
-    event = "VimEnter",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      theme = "doom",
-      config = {
-        header = {
-          "",
-          "  ███████╗██╗  ██╗███████╗███╗   ██╗    ███████╗████████╗███████╗██████╗ ███╗   ██╗██╗████████╗██╗   ██╗",
-          "  ██╔════╝██║  ██║██╔════╝████╗  ██║    ██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗  ██║██║╚══██╔══╝╚██╗ ██╔╝",
-          "  ███████╗███████║█████╗  ██╔██╗ ██║    █████╗     ██║   █████╗  ██████╔╝██╔██╗ ██║██║   ██║    ╚████╔╝ ",
-          "  ╚════██║██╔══██║██╔══╝  ██║╚██╗██║    ██╔══╝     ██║   ██╔══╝  ██╔══██╗██║╚██╗██║██║   ██║     ╚██╔╝  ",
-          "  ███████║██║  ██║███████╗██║ ╚████║    ███████╗   ██║   ███████╗██║  ██║██║ ╚████║██║   ██║      ██║   ",
-          "  ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝    ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝      ╚═╝   ",
-          "",
-        },
-        center = {
-          { icon = "  ", key = "f", desc = "F-查找文件", action = "Telescope find_files" },
-          { icon = "  ", key = "r", desc = "R-最近文件", action = "Telescope oldfiles" },
-          { icon = "  ", key = "G", desc = "G-全局搜索", action = "Telescope live_grep" },
-          { icon = "  ", key = "l", desc = "L-插件管理", action = "Lazy" },
-          { icon = "   ", key = "q", desc = "OvO-退出", action = "qa" },
-        },
-        footer = { "   OvO ShenEternity Let's go！" },
-      },
-    },
-  },
   -- noice.nvim: 命令行美化插件
   {
     "folke/noice.nvim",

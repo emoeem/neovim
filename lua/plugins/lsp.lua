@@ -29,11 +29,17 @@ return {
       local keymaps = require("config.keymaps")
       local on_attach = keymaps.lsp_on_attach
 
+      -- 统一为所有由 lspconfig 管理的 server 提供 cmp 能力与 LSP 快捷键
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       if has_cmp then
         capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
       end
+
+      vim.lsp.config("*", {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
 
       vim.diagnostic.config({
         virtual_text = {
@@ -54,13 +60,33 @@ return {
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
       end
 
+      -- 内置 inlay hints：服务端支持时自动启用（替代已废弃的 inlay-hints.nvim）
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client and client:supports_method("textDocument/inlayHint") then
+            vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+          end
+        end,
+      })
+
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls",
+          "pyright",
+          "clangd",
+          "ts_ls",
+          "bashls",
+          "html",
+          "cssls",
+          "jsonls",
+          "yamlls",
         },
-        automatic_installation = function(server_name)
-          return server_name ~= "rust_analyzer"
-        end,
+        -- mason-lspconfig v2：自动启用 mason 里已安装的 server，
+        -- rust_analyzer / dartls 分别由 rustaceanvim、flutter-tools 管理，排除掉避免重复启动
+        automatic_enable = {
+          exclude = { "rust_analyzer", "dartls" },
+        },
       })
     end,
   },

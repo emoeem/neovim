@@ -17,21 +17,8 @@ return {
       },
 
       on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+        require("config.keymaps").gitsigns_on_attach(bufnr)
       end,
     },
-  },
-
-  -- lazygit.nvim: LazyGit 集成插件
-  {
-    "kdheepak/lazygit.nvim",
-
-    cmd = { "LazyGit", "LazyGitCurrentFile" },
-
-    keys = {
-      { "<leader>gg", ":LazyGit<CR>", desc = "打开 LazyGit" },
-    },
-
-    dependencies = { "nvim-lua/plenary.nvim" },
   },
 }

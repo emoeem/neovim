@@ -1,57 +1,5 @@
 return {
 
-  -- nvim-tree.lua: 文件树插件
-  {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
-    lazy = false,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-
-      require("nvim-tree").setup({
-        sort_by = "case_sensitive",
-        view = {
-          width = 30,
-          side = "left",
-          relativenumber = false,
-        },
-        renderer = {
-          group_empty = true,
-          icons = {
-            show = {
-              file = true,
-              folder = true,
-              folder_arrow = true,
-              git = true,
-            },
-          },
-        },
-        filters = {
-          dotfiles = false,
-          custom = { "^.git$" },
-        },
-        git = {
-          enable = true,
-          ignore = false,
-        },
-        actions = {
-          open_file = {
-            quit_on_open = false,
-            window_picker = {
-              enable = true,
-            },
-          },
-        },
-        on_attach = function(bufnr)
-          local api = require("nvim-tree.api")
-          api.config.mappings.default_on_attach(bufnr)
-        end,
-      })
-    end,
-  },
-
   -- nvim-autopairs: 自动括号配对插件
   {
     "windwp/nvim-autopairs",
@@ -93,7 +41,9 @@ return {
   {
     "akinsho/toggleterm.nvim",
     version = "*",
-    keys = { "<C-\\>" },
+    keys = {
+      { "<C-\\>", "<cmd>ToggleTerm<CR>", desc = "终端" },
+    },
     opts = {
       size = function(term)
         if term.direction == "horizontal" then

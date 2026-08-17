@@ -1,6 +1,8 @@
 # My_NeoVim_Configs
 ShenEternity的nvim配置
 
+> 完整配置说明（插件清单、快捷键）见 [NVIM_CONFIG.md](NVIM_CONFIG.md)
+
 ## 安装
 
 ### 依赖要求
@@ -412,10 +414,10 @@ treesitter-cli
 
 | 模式 | Key | 作用 |
 |-----|-----|------|
-| N | `<F5>` | 启动/继续调试 |
-| N | `<F10>` | 单步跳过 |
-| N | `<F11>` | 单步进入 |
-| N | `<F12>` | 单步退出 |
+| N | `<leader>dc` | 启动/继续调试 |
+| N | `<leader>do` | 单步跳过 |
+| N | `<leader>di` | 单步进入 |
+| N | `<leader>dx` | 单步退出 |
 | N | `<leader>dk` | 切换断点 |
 | N | `<leader>dK` | 设置条件断点 |
 | N | `<leader>dr` | 打开 REPL |
