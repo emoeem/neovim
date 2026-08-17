@@ -98,6 +98,12 @@ return {
       vim.keymap.set("n", "<leader>bd", smart_close, { desc = "缓冲区：关闭当前" })
       vim.keymap.set("n", "<leader>bo", ":BufferLineCloseOthers<CR>", { desc = "关闭其他缓冲区" })
 
+      for buffer_number = 1, 9 do
+        vim.keymap.set("n", tostring(buffer_number), "<cmd>BufferLineGoToBuffer " .. buffer_number .. "<CR>", {
+          desc = "切换到缓冲区 " .. buffer_number,
+        })
+      end
+
     end,
   },
 

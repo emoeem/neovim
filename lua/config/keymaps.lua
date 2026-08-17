@@ -37,14 +37,10 @@ map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "当前诊断" })
 map("n", "<leader>e", function()
   Snacks.explorer()
 end, { desc = "文件浏览器" })
-map("n", "<C-Left>", "<cmd>bprevious<cr>", { desc = "上一个缓冲区" })
-map("n", "<C-Right>", "<cmd>bnext<cr>", { desc = "下一个缓冲区" })
-map("n", "<C-Up>", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
-map("n", "<C-Down>", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
-
-for tab_number = 1, 9 do
-  map("n", tostring(tab_number), "<cmd>tabnext " .. tab_number .. "<cr>", { desc = "切换到标签页 " .. tab_number })
-end
+map("n", "<S-Left>", "<cmd>bprevious<cr>", { desc = "上一个缓冲区" })
+map("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "下一个缓冲区" })
+map("n", "<S-Up>", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
+map("n", "<S-Down>", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
 
 function M.lsp_on_attach(_, bufnr)
   local function lspmap(lhs, rhs, desc)
