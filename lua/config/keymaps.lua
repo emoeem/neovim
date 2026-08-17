@@ -16,7 +16,11 @@ map("v", ">", ">gv", { desc = "右缩进并保持选中" })
 map("v", "p", '"_dP', { desc = "粘贴且不覆盖寄存器" })
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "退出终端模式" })
 
--- Window navigation remains Neovim's native <C-w>h/j/k/l.
+map("n", "<C-w><Left>", "<C-w>h", { desc = "切到左侧窗口" })
+map("n", "<C-w><Down>", "<C-w>j", { desc = "切到下方窗口" })
+map("n", "<C-w><Up>", "<C-w>k", { desc = "切到上方窗口" })
+map("n", "<C-w><Right>", "<C-w>l", { desc = "切到右侧窗口" })
+
 map("n", "<leader>sv", "<cmd>vsplit<cr>", { desc = "垂直分割" })
 map("n", "<leader>sh", "<cmd>split<cr>", { desc = "水平分割" })
 map("n", "<leader>sx", "<cmd>close<cr>", { desc = "关闭窗口" })
@@ -33,10 +37,14 @@ map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "当前诊断" })
 map("n", "<leader>e", function()
   Snacks.explorer()
 end, { desc = "文件浏览器" })
-map("n", "[t", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
-map("n", "]t", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
-map("n", "gT", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
-map("n", "gt", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
+map("n", "<C-Left>", "<cmd>bprevious<cr>", { desc = "上一个缓冲区" })
+map("n", "<C-Right>", "<cmd>bnext<cr>", { desc = "下一个缓冲区" })
+map("n", "<C-Up>", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
+map("n", "<C-Down>", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
+
+for tab_number = 1, 9 do
+  map("n", tostring(tab_number), "<cmd>tabnext " .. tab_number .. "<cr>", { desc = "切换到标签页 " .. tab_number })
+end
 
 function M.lsp_on_attach(_, bufnr)
   local function lspmap(lhs, rhs, desc)
