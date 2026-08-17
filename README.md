@@ -2,7 +2,7 @@
 
 基于 lazy.nvim 的模块化 Neovim 配置，要求 Neovim >= 0.11。
 
-完整的插件清单、快捷键和维护说明见 [NVIM_CONFIG.md](NVIM_CONFIG.md)。
+完整的插件清单和维护说明见 [NVIM_CONFIG.md](NVIM_CONFIG.md)。详细的中文快捷键学习手册见 [KEYMAPS.md](KEYMAPS.md)。
 
 ## 安装
 
