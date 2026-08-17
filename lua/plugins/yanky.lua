@@ -14,9 +14,9 @@ return {
     preserve_cursor_position = { enabled = true },
   },
   keys = {
-    { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "粘贴（yanky）" },
-    { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "向前粘贴（yanky）" },
-    { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "粘贴并保留光标" },
+    { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "向后粘贴" },
+    { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "向前粘贴" },
+    { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "向后粘贴并保留光标" },
     { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "向前粘贴并保留光标" },
     { "<c-n>", "<Plug>(YankyCycleForward)", desc = "循环下一个粘贴内容" },
     { "<c-p>", "<Plug>(YankyCycleBackward)", desc = "循环上一个粘贴内容" },

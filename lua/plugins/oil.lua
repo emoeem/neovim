@@ -2,7 +2,7 @@ return {
   "stevearc/oil.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
-    { "-", "<cmd>Oil<CR>", desc = "文件系统 (Oil)" },
+    { "-", "<cmd>Oil<CR>", desc = "文件系统浏览器" },
   },
   opts = {
     default_file_explorer = true,

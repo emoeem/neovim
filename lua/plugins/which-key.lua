@@ -11,15 +11,15 @@ return {
     })
 
     wk.add({
-      { "<leader>b", group = "Buffer" },
+      { "<leader>b", group = "缓冲区" },
       { "<leader>c", group = "代码" },
       { "<leader>d", group = "调试" },
       { "<leader>f", group = "查找" },
-      { "<leader>g", group = "Git" },
-      { "<leader>h", group = "Harpoon" },
+      { "<leader>g", group = "版本控制" },
+      { "<leader>h", group = "文件标记" },
       { "<leader>m", group = "构建" },
       { "<leader>o", group = "任务" },
-      { "<leader>r", group = "Rust" },
+      { "<leader>r", group = "Rust 开发" },
       { "<leader>s", group = "窗口" },
       { "<leader>t", group = "测试" },
       { "<leader>u", group = "开关" },

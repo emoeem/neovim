@@ -74,7 +74,7 @@
 | RRethy/vim-illuminate | 高亮光标所在词的其他出现位置 | BufReadPre |
 | kylechui/nvim-surround | `ys`/`cs`/`ds` 环绕操作 | BufReadPre |
 | akinsho/toggleterm.nvim | 浮动终端（`<C-\>`） | 按键 |
-| folke/flash.nvim | 快速跳转（`s`） | VeryLazy |
+| folke/flash.nvim | 快速跳转（按命令调用） | VeryLazy |
 | echasnovski/mini.nvim | 平滑动画、智能删 buffer、缩进范围高亮 | VeryLazy |
 | stevearc/oil.nvim | 像编辑 buffer 一样操作文件系统（`-`） | 按键 |
 | mikavilpas/yazi.nvim | Yazi 文件管理器（`:Yazi`） | VeryLazy |
@@ -151,7 +151,7 @@
 | `<` / `>`（可视模式） | 缩进并保持选中 |
 | `p`（可视模式） | 粘贴且不覆盖寄存器 |
 
-### 窗口与 Buffer
+### 窗口与缓冲区
 
 | 按键 | 作用 |
 | --- | --- |
@@ -159,8 +159,8 @@
 | `<leader>sv` / `<leader>sh` | 垂直 / 水平分割 |
 | `<leader>sx` / `<leader>so` | 关闭窗口 / 只保留当前窗口 |
 | `<leader>se` / `<leader>sm` | 均衡 / 最大化窗口 |
-| `<leader>bb` / `<leader>bd` / `<leader>bo` | Buffer 列表 / 关闭当前 / 关闭其他 |
-| `[b` / `]b` | 上一个 / 下一个 Buffer |
+| `<leader>bb` / `<leader>bd` / `<leader>bo` | 缓冲区列表 / 关闭当前 / 关闭其他 |
+| `[b` / `]b` | 上一个 / 下一个缓冲区 |
 
 ### 查找与文件
 
@@ -190,12 +190,12 @@
 
 | 按键 | 作用 |
 | --- | --- |
-| `<leader>gg` / `<leader>gb` | LazyGit / 浏览 Git 链接 |
-| `<leader>gd` / `<leader>gh` | Diff 视图 / 文件历史 |
+| `<leader>gg` / `<leader>gb` | Git 管理界面 / 浏览 Git 链接 |
+| `<leader>gd` / `<leader>gh` | 查看差异 / 文件历史 |
 | `[h` / `]h` | 上一处 / 下一处 Git 修改 |
 | `<leader>dc` / `<leader>db` | 调试继续 / 切换断点 |
 | `<leader>do` / `<leader>di` / `<leader>dO` | 单步跳过 / 进入 / 退出 |
-| `<leader>dB` / `<leader>dr` / `<leader>du` | 条件断点 / REPL / 调试 UI |
+| `<leader>dB` / `<leader>dr` / `<leader>du` | 条件断点 / 调试交互终端 / 调试界面 |
 | `<leader>mb` / `<leader>mr` / `<leader>md` | C++ 构建 / 构建并运行 / 构建并调试 |
 
 ### 按需功能
@@ -206,7 +206,7 @@
 | `<leader>ts` / `<leader>to` | 测试总览 / 输出 |
 | `<leader>rr` / `<leader>rt` / `<leader>rd` | Rust 运行 / 测试 / 调试（仅 Rust 文件） |
 | `<leader>re` / `<leader>rc` | Rust 解释错误 / 打开 Cargo.toml（仅 Rust 文件） |
-| `<leader>ha` / `<leader>hh` | Harpoon 标记文件 / 打开列表 |
+| `<leader>ha` / `<leader>hh` | 标记文件 / 打开标记列表 |
 | `<leader>or` / `<leader>ol` / `<leader>oo` | 运行任务 / 任务列表 / 快速操作 |
 | `<leader>us` / `<leader>uw` / `<leader>uh` / `<leader>uu` | 拼写 / 自动换行 / 行内提示 / 撤销树 |
 | `<leader>l` / `<leader>M` / `<leader>n` | Lazy / Mason / 通知历史 |

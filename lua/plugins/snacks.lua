@@ -60,7 +60,7 @@ return {
   keys = {
     -- ── 常用查找 ──
     { "<leader>ff", function() Snacks.picker.files() end, desc = "找文件" },
-    { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Buffer: 列表" },
+    { "<leader>bb", function() Snacks.picker.buffers() end, desc = "缓冲区：列表" },
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "最近文件" },
     { "<leader>fg", function() Snacks.picker.grep() end, desc = "全局搜索" },
     { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "搜索词", mode = { "n", "x" } },
@@ -71,8 +71,8 @@ return {
     { "<leader>n", function() Snacks.notifier.show_history() end, desc = "通知历史" },
 
     -- ── Git ──
-    { "<leader>gg", function() Snacks.lazygit() end, desc = "LazyGit" },
-    { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git: 浏览链接", mode = { "n", "v" } },
+    { "<leader>gg", function() Snacks.lazygit() end, desc = "打开 Git 管理界面" },
+    { "<leader>gb", function() Snacks.gitbrowse() end, desc = "版本控制：浏览链接", mode = { "n", "v" } },
 
     -- ── 切换开关 ──
     { "<leader>us", function() Snacks.toggle.option("spell", { name = "拼写检查" }):map("<leader>us") end, desc = "拼写检查" },

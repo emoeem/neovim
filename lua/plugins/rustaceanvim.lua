@@ -21,7 +21,7 @@ return {
 
     local function set_rust_maps(bufnr)
       local function map(lhs, rhs, desc)
-        vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = "Rust: " .. desc })
+        vim.keymap.set("n", lhs, rhs, { buffer = bufnr, desc = "Rust：" .. desc })
       end
 
       map("<leader>rr", "<cmd>RustLsp run<cr>", "运行")

@@ -28,7 +28,7 @@ map("n", "<leader>sm", function()
 end, { desc = "最大化窗口" })
 
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "插件管理" })
-map("n", "<leader>M", "<cmd>Mason<cr>", { desc = "LSP 与工具管理" })
+map("n", "<leader>M", "<cmd>Mason<cr>", { desc = "语言服务与工具管理" })
 map("n", "<leader>xd", vim.diagnostic.open_float, { desc = "当前诊断" })
 map("n", "<leader>e", function()
   Snacks.explorer()
@@ -36,7 +36,7 @@ end, { desc = "文件浏览器" })
 
 function M.lsp_on_attach(_, bufnr)
   local function lspmap(lhs, rhs, desc)
-    map("n", lhs, rhs, { buffer = bufnr, desc = "代码: " .. desc })
+    map("n", lhs, rhs, { buffer = bufnr, desc = "代码：" .. desc })
   end
 
   lspmap("K", vim.lsp.buf.hover, "悬浮文档")
@@ -48,7 +48,7 @@ function M.lsp_on_attach(_, bufnr)
   lspmap("<leader>ca", vim.lsp.buf.code_action, "代码动作")
   map("n", "<leader>cr", function()
     return ":IncRename " .. vim.fn.expand("<cword>")
-  end, { buffer = bufnr, expr = true, desc = "代码: 重命名" })
+  end, { buffer = bufnr, expr = true, desc = "代码：重命名" })
   lspmap("[d", vim.diagnostic.goto_prev, "上一诊断")
   lspmap("]d", vim.diagnostic.goto_next, "下一诊断")
 end
@@ -68,8 +68,8 @@ end
 
 function M.gitsigns_on_attach(bufnr)
   local gs = package.loaded.gitsigns
-  map("n", "]h", gs.next_hunk, { buffer = bufnr, desc = "Git: 下一处修改" })
-  map("n", "[h", gs.prev_hunk, { buffer = bufnr, desc = "Git: 上一处修改" })
+  map("n", "]h", gs.next_hunk, { buffer = bufnr, desc = "版本控制：下一处修改" })
+  map("n", "[h", gs.prev_hunk, { buffer = bufnr, desc = "版本控制：上一处修改" })
 end
 
 return M

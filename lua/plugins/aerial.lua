@@ -1,7 +1,7 @@
 return {
   "stevearc/aerial.nvim",
   keys = {
-    { "<leader>cs", "<cmd>AerialToggle<CR>", desc = "代码: 符号大纲" },
+    { "<leader>cs", "<cmd>AerialToggle<CR>", desc = "代码：符号大纲" },
   },
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
