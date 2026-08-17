@@ -65,10 +65,14 @@ return {
       { "<S-Right>", desc = "下一个缓冲区" },
       { "<S-Up>", desc = "上一个标签页" },
       { "<S-Down>", desc = "下一个标签页" },
-      { "<C-S-Left>", desc = "切到左侧窗口" },
-      { "<C-S-Down>", desc = "切到下方窗口" },
-      { "<C-S-Up>", desc = "切到上方窗口" },
-      { "<C-S-Right>", desc = "切到右侧窗口" },
+      { "<C-i>", desc = "切到上方窗口" },
+      { "<C-j>", desc = "切到左侧窗口" },
+      { "<C-k>", desc = "切到下方窗口" },
+      { "<C-l>", desc = "切到右侧窗口" },
+      { "<C-PageUp>", desc = "缩小窗口宽度" },
+      { "<C-PageDown>", desc = "扩大窗口宽度" },
+      { "<C-S-PageUp>", desc = "缩小窗口高度" },
+      { "<C-S-PageDown>", desc = "扩大窗口高度" },
     })
   end,
 }
