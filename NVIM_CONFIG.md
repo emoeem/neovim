@@ -77,15 +77,15 @@
 | folke/flash.nvim | 快速跳转（`s`） | VeryLazy |
 | echasnovski/mini.nvim | 平滑动画、智能删 buffer、缩进范围高亮 | VeryLazy |
 | stevearc/oil.nvim | 像编辑 buffer 一样操作文件系统（`-`） | 按键 |
-| mikavilpas/yazi.nvim | Yazi 文件管理器（`<leader>-`） | VeryLazy |
+| mikavilpas/yazi.nvim | Yazi 文件管理器（`:Yazi`） | VeryLazy |
 | ThePrimeagen/harpoon | 快速标记/切换文件 | VeryLazy |
 | folke/persistence.nvim | 会话保存与恢复 | BufReadPre |
-| uga-rosa/ccc.nvim | 颜色选择器（`<leader>cp`） | 按键 |
+| uga-rosa/ccc.nvim | 颜色选择器（`:CccPick`） | 启动 |
 | OXY2DEV/markview.nvim | Markdown 可视化渲染 | ft=markdown |
-| iamcco/markdown-preview.nvim | 浏览器预览 Markdown（`<leader>mp`） | 命令 |
+| iamcco/markdown-preview.nvim | 浏览器预览 Markdown（`:MarkdownPreviewToggle`） | 命令 |
 | folke/todo-comments.nvim | 高亮 TODO/FIXME 并聚合到 Trouble | VeryLazy |
-| mbbill/undotree | 可视化撤销树（`<leader>U`） | 按键 |
-| MagicDuck/grug-far.nvim | 项目级查找替换（`<leader>fG`） | 按键 |
+| mbbill/undotree | 可视化撤销树（`<leader>uu`） | 按键 |
+| MagicDuck/grug-far.nvim | 项目级查找替换（`<leader>fR`） | 按键 |
 | stevearc/overseer.nvim | 任务运行器（`<leader>o*`） | 命令 |
 
 ### 搜索与导航
@@ -94,7 +94,7 @@
 | --- | --- | --- |
 | folke/which-key.nvim | 快捷键提示向导 | VeryLazy |
 | folke/snacks.nvim (picker) | 文件/内容/符号/诊断等所有模糊搜索 | 启动 |
-| stevearc/aerial.nvim | 符号大纲（`<leader>a`） | 按键 |
+| stevearc/aerial.nvim | 符号大纲（`<leader>cs`） | 按键 |
 | folke/trouble.nvim | 诊断/符号/引用列表 | 命令 |
 | dnlhc/glance.nvim | 定义/引用/类型定义预览 | 命令 |
 
@@ -135,171 +135,90 @@
 | saecki/crates.nvim | Cargo.toml 依赖版本管理 | ft=rust/toml |
 | akinsho/flutter-tools.nvim | Flutter 开发支持 | ft=dart |
 
-## 快捷键大全
+## 快捷键
 
-> `<leader>` = 空格键。`n`=普通、`v`=可视、`i`=插入、`x`=字符可视、`o`=操作符待决。
+`<leader>` 是空格。所有自定义快捷键都以空格开始，不使用 `F1`-`F12` 或 Alt 组合键，因此不会与 Niri 的全局按键冲突。输入空格后可由 which-key 查看当前可用按键。
 
-### 基础操作
-
-| 按键 | 模式 | 作用 |
-| --- | --- | --- |
-| `<leader>w` / `<leader>q` / `<leader>Q` | n | 保存 / 退出 / 全部退出 |
-| `jj` | i | 退出插入模式 |
-| `<Esc>` | n | 清除搜索高亮 |
-| `<C-u>` | n | 向上翻半页并居中 |
-| `gG` | n/v | 跳到最后一行 |
-| `<A-k>` / `<A-i>` | n/v | 下移 / 上移当前行（选中） |
-| `<` / `>` | v | 缩进并保持选中 |
-| `p` | v | 粘贴且不覆盖寄存器 |
-| `s` | n/x/o | Flash 字符跳转 |
-
-### 窗口操作（`<leader>W`）
+### 日常操作
 
 | 按键 | 作用 |
 | --- | --- |
-| `<leader>Wv` / `<leader>Wh` | 垂直 / 水平分割 |
-| `<leader>Wc` / `<leader>Wo` | 关闭窗口 / 只留当前 |
-| `<leader>Wr` / `<leader>Wm` / `<leader>W=` | 旋转 / 最大化 / 均衡 |
-| `<A-方向键>` | 窗口间跳转 |
-| `<A-->` / `<A-=>` | 宽度 -10 / +10 |
-| `<A-S-->` / `<A-S-=>` | 高度 -10 / +10 |
+| `<leader>w` / `<leader>q` / `<leader>Q` | 保存 / 退出 / 全部退出 |
+| `jj`（插入模式） | 退出插入模式 |
+| `<Esc>` | 清除搜索高亮 |
+| `-` | Oil 文件浏览器 |
+| `<C-\\>` | 打开或关闭浮动终端 |
+| `<` / `>`（可视模式） | 缩进并保持选中 |
+| `p`（可视模式） | 粘贴且不覆盖寄存器 |
 
-### Buffer 操作（`<leader>b`）
-
-| 按键 | 作用 |
-| --- | --- |
-| `<leader>bc` | 智能关闭当前 buffer（自动切换相邻，保存后删除） |
-| `<leader>bo` / `<leader>bl` / `<leader>br` | 关闭其他 / 左侧 / 右侧 |
-| `<leader>bh` / `<leader>bn` | 左移 / 右移 buffer |
-| `<S-j>` / `<S-l>` | 上一个 / 下一个 buffer |
-
-### 搜索（`<leader>f`）
+### 窗口与 Buffer
 
 | 按键 | 作用 |
 | --- | --- |
-| `<leader><space>` | 智能查找 |
-| `<leader>ff` / `<leader>fb` / `<leader>fr` / `<leader>fp` | 文件 / buffer / 最近 / 项目 |
-| `<leader>fg` / `<leader>/` | 全局搜索 |
-| `<leader>fG` | 全局查找替换（grug-far，n/v） |
-| `<leader>fw` | 搜索光标下单词 |
-| `<leader>fc` | 当前文件行搜索 |
-| `<leader>fs` / `<leader>fS` | 文件符号 / 工作区符号 |
-| `<leader>fh` / `<leader>fk` / `<leader>f:` | 帮助 / 快捷键 / 命令 |
-| `<leader>fd` | 诊断列表 |
-| `<leader>f/` / `<leader>:` | 继续搜索 / 命令历史 |
-| `<leader>ft` | TODO 列表 |
+| `<C-w>h/j/k/l` | 跳转左 / 下 / 上 / 右窗口（Neovim 原生） |
+| `<leader>sv` / `<leader>sh` | 垂直 / 水平分割 |
+| `<leader>sx` / `<leader>so` | 关闭窗口 / 只保留当前窗口 |
+| `<leader>se` / `<leader>sm` | 均衡 / 最大化窗口 |
+| `<leader>bb` / `<leader>bd` / `<leader>bo` | Buffer 列表 / 关闭当前 / 关闭其他 |
+| `[b` / `]b` | 上一个 / 下一个 Buffer |
 
-### 文件与目录
+### 查找与文件
 
 | 按键 | 作用 |
 | --- | --- |
-| `<leader>e` | Snacks 资源管理器 |
-| `-` | Oil 文件系统（buffer 风格编辑） |
-| `<leader>-` | Yazi 文件管理器 |
-| `<leader>cR` | 重命名文件（含引用） |
-| `<leader>.` / `<leader>S` | 暂存 buffer / 选择暂存 |
+| `<leader>e` | 文件浏览器 |
+| `<leader>ff` / `<leader>fr` | 查找文件 / 最近文件 |
+| `<leader>fg` / `<leader>fw` | 全局搜索 / 搜索光标词或选区 |
+| `<leader>fs` / `<leader>fh` / `<leader>fk` | 文件符号 / 帮助 / 快捷键 |
+| `<leader>fR` | 项目级查找替换 |
 
-### Git（`<leader>g`）
+### 代码与诊断
 
-| 按键 | 作用 |
-| --- | --- |
-| `<leader>gg` | 打开 lazygit |
-| `<leader>gB` | Git 浏览器（复制链接） |
-| `<leader>dv` / `<leader>dh` | Diff 视图 / 文件历史 |
-| `]h` / `[h` | 下一个 / 上一个 hunk |
-
-### LSP 与代码导航
+这些 LSP 键只在语言服务已附加的文件中生效。
 
 | 按键 | 作用 |
 | --- | --- |
 | `K` | 悬浮文档 |
-| `gd` / `gD` | Glance 定义预览 / 直接跳转定义 |
-| `gR` / `gY` / `gM` | 引用 / 类型定义 / 实现 |
+| `gd` / `gD` | 定义 / 声明 |
+| `gr` / `gi` / `gy` | 引用 / 实现 / 类型定义 |
 | `[d` / `]d` | 上一条 / 下一条诊断 |
-| `<leader>ca` / `<leader>dq` | 代码动作 |
-| `<leader>rn` | 重命名符号 |
-| `<leader>lf` | 格式化当前文件 |
-| `<leader>a` | 符号大纲 |
+| `<leader>ca` / `<leader>cr` / `<leader>cf` | 代码动作 / 重命名 / 格式化 |
+| `<leader>cs` | 符号大纲 |
+| `<leader>xd` / `<leader>xx` / `<leader>xX` | 当前诊断 / 工作区诊断 / 当前文件诊断 |
 
-### 诊断 / 修复（`<leader>x`）
-
-| 按键 | 作用 |
-| --- | --- |
-| `<leader>xx` / `<leader>xX` | Trouble 全部 / 当前文件诊断 |
-| `<leader>xL` / `<leader>xQ` | 位置列表 / 快速修复列表 |
-| `<leader>cs` / `<leader>cl` | Trouble 符号 / LSP 引用 |
-| `<leader>dd` | 当前行诊断浮窗 |
-| `<leader>dD` | 工作区诊断 |
-
-### 调试与构建（`<leader>d`、`<leader>c`）
+### Git 与调试
 
 | 按键 | 作用 |
 | --- | --- |
-| `<leader>dc` / `<leader>do` / `<leader>di` / `<leader>dx` | 继续 / 单步跳过 / 进入 / 退出 |
-| `<leader>dk` / `<leader>dK` | 断点 / 条件断点 |
-| `<leader>dr` / `<leader>du` | REPL / 调试 UI |
-| `<leader>cd` / `<leader>cb` / `<leader>cr` | C++ 构建并调试 / 构建 / 构建并运行 |
+| `<leader>gg` / `<leader>gb` | LazyGit / 浏览 Git 链接 |
+| `<leader>gd` / `<leader>gh` | Diff 视图 / 文件历史 |
+| `[h` / `]h` | 上一处 / 下一处 Git 修改 |
+| `<leader>dc` / `<leader>db` | 调试继续 / 切换断点 |
+| `<leader>do` / `<leader>di` / `<leader>dO` | 单步跳过 / 进入 / 退出 |
+| `<leader>dB` / `<leader>dr` / `<leader>du` | 条件断点 / REPL / 调试 UI |
+| `<leader>mb` / `<leader>mr` / `<leader>md` | C++ 构建 / 构建并运行 / 构建并调试 |
 
-### 测试（`<leader>t`）
-
-| 按键 | 作用 |
-| --- | --- |
-| `<leader>tr` / `<leader>tf` | 运行最近测试 / 当前文件测试 |
-| `<leader>td` | 调试最近测试 |
-| `<leader>ts` / `<leader>to` | 测试总览 / 测试输出 |
-
-### 任务（`<leader>o`）
+### 按需功能
 
 | 按键 | 作用 |
 | --- | --- |
+| `<leader>tr` / `<leader>tf` / `<leader>td` | 测试最近项 / 当前文件 / 调试最近项 |
+| `<leader>ts` / `<leader>to` | 测试总览 / 输出 |
+| `<leader>rr` / `<leader>rt` / `<leader>rd` | Rust 运行 / 测试 / 调试（仅 Rust 文件） |
+| `<leader>re` / `<leader>rc` | Rust 解释错误 / 打开 Cargo.toml（仅 Rust 文件） |
+| `<leader>ha` / `<leader>hh` | Harpoon 标记文件 / 打开列表 |
 | `<leader>or` / `<leader>ol` / `<leader>oo` | 运行任务 / 任务列表 / 快速操作 |
+| `<leader>us` / `<leader>uw` / `<leader>uh` / `<leader>uu` | 拼写 / 自动换行 / 行内提示 / 撤销树 |
+| `<leader>l` / `<leader>M` / `<leader>n` | Lazy / Mason / 通知历史 |
 
-### Rust（`<leader>r`）
-
-| 按键 | 作用 |
-| --- | --- |
-| `<leader>rr` / `<leader>rt` / `<leader>rd` | 运行 / 测试 / 调试 |
-| `<leader>re` / `<leader>rc` | 解释错误 / 打开 Cargo.toml |
-| `<leader>rR` | 重启 rust-analyzer |
-| `<leader>ru` / `<leader>rU` / `<leader>rs` | 更新依赖 / 升级全部 / crate 详情 |
-
-### Harpoon（`<leader>h`）
+### 补全与折叠
 
 | 按键 | 作用 |
 | --- | --- |
-| `<leader>hm` / `<leader>ha` | 菜单 / 标记当前文件 |
-| `<leader>hh` / `<leader>hj` / `<leader>hk` / `<leader>hl` | 快速打开文件 1-4 |
-| `<leader>hp` / `<leader>hn` / `<leader>hL` | 上一个 / 下一个 / 清空 |
-
-### 开关与工具（`<leader>u`、`<leader>p`）
-
-| 按键 | 作用 |
-| --- | --- |
-| `<leader>us` / `<leader>uw` | 拼写检查 / 自动换行 |
-| `<leader>ud` / `<leader>ug` | 诊断 / 缩进线开关 |
-| `<leader>uD` / `<leader>uh` | 聚焦模式 / 行内提示 |
-| `<leader>pl` / `<leader>pm` | 插件管理 / LSP 工具管理 |
-| `<leader>ps` / `<leader>pd` | 恢复上次会话 / 停止保存 |
-| `<leader>n` | 通知历史 |
-| `<leader>mp` | Markdown 预览 |
-| `<leader>cp` | 颜色选择器 |
-| `<leader>U` | 撤销树 |
-
-### 补全（插入模式）
-
-| 按键 | 作用 |
-| --- | --- |
-| `<C-j>` / `<C-k>` | 下一个 / 上一个候选项 |
-| `<C-b>` / `<C-f>` | 文档滚动 |
-| `<C-/>` | 手动触发补全 |
-| `<CR>` | 确认选中项 |
-
-### 折叠
-
-| 按键 | 作用 |
-| --- | --- |
-| `zR` / `zM` | 展开 / 关闭所有折叠 |
-| `zc` / `zo` / `za` | 关闭 / 展开 / 切换当前折叠 |
+| `<C-j>` / `<C-k>`（插入模式） | 下一个 / 上一个补全项 |
+| `<C-b>` / `<C-f>`（插入模式） | 补全文档滚动 |
+| `<C-/>` / `<CR>`（插入模式） | 手动补全 / 确认 |
+| `zR` / `zM` / `zc` / `zo` / `za` | 展开全部 / 关闭全部 / 关闭 / 展开 / 切换折叠 |
 
 ## 常用维护命令
 
@@ -314,7 +233,6 @@
 
 ## 说明
 
-- AI 补全（copilot.lua / CopilotChat.nvim）与已禁用的 neocodeium / llama.vim
-  已从配置中移除；如需 AI 补全可重新引入。
+- AI 补全插件已从配置中移除，如需 AI 补全可单独引入。
 - inlay hints 使用 Neovim 内置实现（0.10+），无需第三方插件。
 - 诊断/导航类功能由 Trouble、Glance、aerial 与 LSP 内置完成（Lspsaga 已移除）。

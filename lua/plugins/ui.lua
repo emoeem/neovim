@@ -95,16 +95,11 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>bc", smart_close, { desc = "智能关闭buffer" })
+      vim.keymap.set("n", "<leader>bd", smart_close, { desc = "Buffer: 关闭当前" })
       vim.keymap.set("n", "<leader>bo", ":BufferLineCloseOthers<CR>", { desc = "关闭其他buffer" })
-      vim.keymap.set("n", "<leader>bl", ":BufferLineCloseLeft<CR>", { desc = "关闭左侧buffer" })
-      vim.keymap.set("n", "<leader>br", ":BufferLineCloseRight<CR>", { desc = "关闭右侧buffer" })
 
-      vim.keymap.set("n", "<S-j>", ":BufferLineCyclePrev<CR>", { desc = "上一个buffer" })
-      vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { desc = "下一个buffer" })
-
-      vim.keymap.set("n", "<leader>bh", ":BufferLineMovePrev<CR>", { desc = "向左移动buffer" })
-      vim.keymap.set("n", "<leader>bn", ":BufferLineMoveNext<CR>", { desc = "向右移动buffer" })
+      vim.keymap.set("n", "[b", ":BufferLineCyclePrev<CR>", { desc = "Buffer: 上一个" })
+      vim.keymap.set("n", "]b", ":BufferLineCycleNext<CR>", { desc = "Buffer: 下一个" })
     end,
   },
 

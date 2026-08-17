@@ -2,8 +2,8 @@ return {
   "sindrets/diffview.nvim",
   cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
   keys = {
-    { "<leader>dv", "<cmd>DiffviewOpen<CR>", desc = "Git Diff" },
-    { "<leader>dh", "<cmd>DiffviewFileHistory<CR>", desc = "文件历史" },
+    { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Git: Diff" },
+    { "<leader>gh", "<cmd>DiffviewFileHistory<CR>", desc = "Git: 文件历史" },
   },
   config = function()
     require("diffview").setup({

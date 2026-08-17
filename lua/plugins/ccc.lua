@@ -1,8 +1,5 @@
 return {
   "uga-rosa/ccc.nvim",
-  keys = {
-    { "<leader>cp", "<cmd>CccPick<CR>", desc = "打开调色盘" },
-  },
   config = function()
     local ccc = require("ccc")
     ccc.setup({

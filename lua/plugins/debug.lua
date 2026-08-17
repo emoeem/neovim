@@ -61,7 +61,7 @@ return {
           end
           local full = dir .. "/" .. name
           local stat = vim.uv.fs_stat(full)
-          if stat and stat.type == "file" and stat.nlink > 0 then
+          if stat and stat.type == "file" and vim.fn.executable(full) == 1 then
             -- crude ELF check: read first 4 bytes
             local fd = vim.uv.fs_open(full, "r", 438)
             if fd then
@@ -138,15 +138,15 @@ return {
       }
       dap.configurations.c = dap.configurations.cpp
 
-      vim.keymap.set("n", "<leader>cd", function()
+      vim.keymap.set("n", "<leader>md", function()
         run_build(function() dap.continue() end)
-      end, { desc = "C++: 构建并调试" })
+      end, { desc = "构建: C++ 构建并调试" })
 
-      vim.keymap.set("n", "<leader>cb", function()
+      vim.keymap.set("n", "<leader>mb", function()
         run_build()
-      end, { desc = "C++: 构建项目" })
+      end, { desc = "构建: C++ 构建项目" })
 
-      vim.keymap.set("n", "<leader>cr", function()
+      vim.keymap.set("n", "<leader>mr", function()
         run_build(function()
           local build_dir = vim.fn.getcwd() .. "/build"
           local exe = find_executable(build_dir)
@@ -156,7 +156,7 @@ return {
             vim.notify("No executable found in build/", vim.log.levels.ERROR)
           end
         end)
-      end, { desc = "C++: 构建并运行" })
+      end, { desc = "构建: C++ 构建并运行" })
 
       dap.configurations.rust = {
         {
@@ -187,14 +187,14 @@ return {
         dapui.close()
       end
 
-      vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "调试：启动/继续" })
-      vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "调试：单步跳过" })
-      vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "调试：单步进入" })
-      vim.keymap.set("n", "<leader>dx", dap.step_out, { desc = "调试：单步退出" })
-      vim.keymap.set("n", "<leader>dk", dap.toggle_breakpoint, { desc = "调试：切换断点" })
-      vim.keymap.set("n", "<leader>dK", function() dap.set_breakpoint(vim.fn.input("断点条件：")) end, { desc = "调试：设置条件断点" })
-      vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "调试：打开REPL" })
-      vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "调试：切换UI" })
+      vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "调试: 启动/继续" })
+      vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "调试: 切换断点" })
+      vim.keymap.set("n", "<leader>dB", function() dap.set_breakpoint(vim.fn.input("断点条件: ")) end, { desc = "调试: 条件断点" })
+      vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "调试: 单步跳过" })
+      vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "调试: 单步进入" })
+      vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "调试: 单步退出" })
+      vim.keymap.set("n", "<leader>dr", dap.repl.open, { desc = "调试: 打开 REPL" })
+      vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "调试: 切换 UI" })
     end,
   },
 }

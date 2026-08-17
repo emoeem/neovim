@@ -5,7 +5,4 @@ return {
   opts = {
     signs = true,
   },
-  keys = {
-    { "<leader>ft", "<cmd>TodoTrouble<CR>", desc = "TODO 列表" },
-  },
 }

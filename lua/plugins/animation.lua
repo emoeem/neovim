@@ -6,7 +6,7 @@
 --   - 光标拖尾  → smear-cursor.nvim（mini.animate.cursor 保持关闭）
 --   - 操作反馈  → tiny-glimmer.nvim（yank / 粘贴 / 撤销 / 重做）
 -- 三个插件都是 VeryLazy 懒加载，不占启动时间；
--- 光标拖尾和操作反馈带开关（<leader>uc / <leader>ua），不想用时直接关掉即可，
+  -- 光标拖尾和操作反馈可通过各插件命令临时关闭，
 -- 不必删插件。某个类型完全不想要时，注释掉对应 spec 就行。
 -- =============================================================================
 
@@ -40,7 +40,7 @@ return {
     end,
   },
 
-  -- ── 光标移动拖尾（提升最直观；不想要时 <leader>uc 关掉）──
+  -- ── 光标移动拖尾 ──
   {
     "sphamba/smear-cursor.nvim",
     event = "VeryLazy",
@@ -62,12 +62,9 @@ return {
       -- 距离太近不动画，减少不必要的闪烁
       distance_stop_animating = 0.3,
     },
-    keys = {
-      { "<leader>uc", "<cmd>SmearCursorToggle<CR>", desc = "光标拖尾开关" },
-    },
   },
 
-  -- ── 操作反馈动画（yank / 粘贴 / 撤销 / 重做；不想要时 <leader>ua 关掉）──
+  -- ── 操作反馈动画（yank / 粘贴 / 撤销 / 重做）──
   {
     "rachartier/tiny-glimmer.nvim",
     event = "VeryLazy",
@@ -126,9 +123,6 @@ return {
           easing = "outBack",
         },
       },
-    },
-    keys = {
-      { "<leader>ua", "<cmd>lua require('tiny-glimmer').toggle()<CR>", desc = "操作动画开关" },
     },
   },
 }
