@@ -18,7 +18,7 @@ return {
     { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "向前粘贴" },
     { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "向后粘贴并保留光标" },
     { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "向前粘贴并保留光标" },
-    { "<c-n>", "<Plug>(YankyCycleForward)", desc = "循环下一个粘贴内容" },
-    { "<c-p>", "<Plug>(YankyCycleBackward)", desc = "循环上一个粘贴内容" },
+    { "<c-n>", "<Plug>(YankyCycleForward)", mode = "n", desc = "循环下一个粘贴内容" },
+    { "<c-p>", "<Plug>(YankyCycleBackward)", mode = "n", desc = "循环上一个粘贴内容" },
   },
 }

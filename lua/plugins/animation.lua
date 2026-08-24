@@ -70,7 +70,7 @@ return {
     event = "VeryLazy",
     priority = 10, -- 低优先级，避免覆盖其它插件的键位
     opts = {
-      autoreload = true, -- 切换配色（themify）后自动刷新动画颜色
+      autoreload = true, -- 切换配色后自动刷新动画颜色
       overwrite = {
         auto_map = true,
         yank = {

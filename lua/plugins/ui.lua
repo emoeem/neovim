@@ -156,11 +156,9 @@ return {
         view_search = "virtualtext",
       },
 
-      popupmenu = {
-        enabled = true,
-        backend = "nui",
-        kind_icons = true,
-      },
+      -- 补全菜单已交给 blink.cmp（插入/命令模式均有自带 UI），
+      -- 关闭 noice 的原生弹窗，避免位置错乱/双重渲染
+      popupmenu = { enabled = false },
 
       views = {
         cmdline_popup = {

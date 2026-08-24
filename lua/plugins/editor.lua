@@ -16,19 +16,6 @@ return {
     opts = {},
   },
 
-  -- vim-illuminate: 高亮相同单词插件
-  {
-    "RRethy/vim-illuminate",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      delay = 200,
-      large_file_cutoff = 2000,
-    },
-    config = function(_, opts)
-      require("illuminate").configure(opts)
-    end,
-  },
-
   -- nvim-surround: 环绕操作插件
   {
     "kylechui/nvim-surround",

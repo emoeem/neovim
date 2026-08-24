@@ -26,50 +26,6 @@ local kind_icons = {
   TypeParameter = "",
 }
 
-local source_labels = {
-  nvim_lsp = "LSP",
-  luasnip  = "Snip",
-  buffer   = "Buf",
-  path     = "Path",
-  cmdline  = "Cmd",
-}
-
-local function apply_highlights()
-  vim.api.nvim_set_hl(0, "CmpNormal", { link = "NormalFloat" })
-  vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#89b4fa" })
-  vim.api.nvim_set_hl(0, "CmpSel", { bg = "#313244", bold = true })
-  vim.api.nvim_set_hl(0, "CmpDocNormal", { link = "NormalFloat" })
-  vim.api.nvim_set_hl(0, "CmpDocBorder", { fg = "#a6e3a1" })
-  vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#89b4fa", bold = true })
-  vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#89dceb", bold = true })
-  vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#cba6f7" })
-  vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#f38ba8" })
-  vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#cdd6f4" })
-  vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#89b4fa" })
-  vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#89b4fa" })
-  vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#89b4fa" })
-  vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#cdd6f4" })
-  vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#cdd6f4" })
-  vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#fab387" })
-  vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#fab387" })
-  vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "#fab387" })
-  vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "#a6e3a1" })
-  vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#cdd6f4" })
-  vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#fab387" })
-  vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#f9e2af" })
-  vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#f9e2af" })
-  vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#f9e2af" })
-  vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "#cdd6f4" })
-  vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#89dceb" })
-  vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#f38ba8" })
-  vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#f38ba8" })
-  vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#f5c2e7" })
-  vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "#a6e3a1" })
-  vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#a6e3a1" })
-  vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#f9e2af" })
-  vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#6c7086", italic = true })
-end
-
 return {
 
   -- LuaSnip: Lua 代码片段引擎
@@ -111,116 +67,62 @@ return {
     end,
   },
 
-  -- nvim-cmp: 自动补全插件
+  -- blink.cmp: 更快、更现代的自动补全插件（替代 nvim-cmp）
+  -- 保留与 nvim-cmp 一致的操作习惯：C-j/C-k 选择、C-b/C-f 滚动文档、C-/ 手动触发、CR 确认
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
+    "saghen/blink.cmp",
+    version = "1.*",
+    event = { "InsertEnter", "CmdlineEnter" },
+    dependencies = { "L3MON4D3/LuaSnip" },
+    opts = {
+      -- 使用 LuaSnip 作为片段引擎（原有 myclass 模版等继续生效）
+      snippets = { preset = "luasnip" },
+
+      keymap = {
+        preset = "default",
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" }, -- 覆盖默认的 show_signature，保持你的选择习惯
+        ["<C-/>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<CR>"] = { "accept", "fallback" },
+      },
+
+      sources = {
+        -- 与之前 nvim-cmp 相同的优先级：LSP > 片段 > buffer > 路径
+        default = { "lsp", "snippets", "buffer", "path" },
+        providers = {
+          lsp      = { module = "blink.cmp.sources.lsp",      name = "LSP",  score_offset = 100 },
+          snippets = { module = "blink.cmp.sources.snippets", name = "Snip", score_offset = 80 },
+          buffer   = { module = "blink.cmp.sources.buffer",   name = "Buf",  score_offset = 0 },
+          path     = { module = "blink.cmp.sources.path",     name = "Path", score_offset = -25 },
+        },
+      },
+
+      -- 命令模式补全（blink v1.10 起 `sources.cmdline` 已迁移到 `cmdline.sources`）
+      cmdline = {
+        enabled = true,
+        keymap = { preset = "cmdline" },
+        sources = { "cmdline", "path", "buffer" },
+      },
+
+      completion = {
+        documentation = {
+          auto_show = true,
+          window = { border = "rounded" },
+        },
+        ghost_text = { enabled = true },
+        list = {
+          selection = { preselect = true, auto_insert = false },
+        },
+        menu = { border = "rounded" },
+      },
+
+      -- 函数签名提示（C-k 不再用于开关，改为自动显示）
+      signature = { enabled = true },
+
+      appearance = {
+        nerd_font_variant = "mono",
+        kind_icons = kind_icons,
+      },
     },
-    config = function()
-      local cmp     = require("cmp")
-      local luasnip = require("luasnip")
-
-      apply_highlights()
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        pattern  = "*",
-        callback = apply_highlights,
-      })
-
-      cmp.setup({
-
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-
-        window = {
-          completion = cmp.config.window.bordered({
-            winhighlight  = "Normal:CmpNormal,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None",
-            scrollbar     = true,
-            scrollbar_pad = 1,
-            col_offset    = -1,
-            side_padding  = 1,
-            border        = "rounded",
-            zindex        = 1001,
-          }),
-          documentation = cmp.config.window.bordered({
-            winhighlight  = "Normal:CmpDocNormal,FloatBorder:CmpDocBorder",
-            scrollbar     = true,
-            scrollbar_pad = 1,
-            max_width     = 70,
-            max_height    = 25,
-            border        = "rounded",
-            zindex        = 1000,
-          }),
-        },
-
-        mapping = require("config.keymaps").cmp_mappings(),
-
-        sources = cmp.config.sources({
-          { name = "luasnip",  priority = 800 },
-          { name = "nvim_lsp", priority = 1000 },
-          { name = "buffer",   priority = 500 },
-          { name = "path",     priority = 250 },
-        }),
-
-        sorting = {
-          priority_weight = 2,
-          comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.exact,
-            cmp.config.compare.score,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-          },
-        },
-
-        formatting = {
-          fields = { "kind", "abbr", "menu" },
-          format = function(entry, vim_item)
-            local kind_name = vim_item.kind or ""
-            local icon      = kind_icons[kind_name] or "?"
-
-            vim_item.kind   = " " .. icon .. " "
-
-            local src       = source_labels[entry.source.name] or entry.source.name
-            vim_item.menu   = ("  [%-8s] <%s>"):format(kind_name, src)
-
-            local label     = vim_item.abbr
-            if #label > 40 then
-              vim_item.abbr = label:sub(1, 39) .. "..."
-            end
-
-            return vim_item
-          end,
-        },
-
-        experimental = {
-          ghost_text = { hl_group = "Comment" },
-        },
-      })
-
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = "path" },
-          { name = "cmdline" },
-        }),
-      })
-
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = { { name = "buffer" } },
-      })
-    end,
   },
 }

@@ -69,7 +69,7 @@ return {
       },
 
       integrations = {
-        cmp = true,
+        blink_cmp = { style = "bordered" },
         gitsigns = true,
         snacks = true,
         treesitter = true,

@@ -15,7 +15,7 @@
 └── lua/
     ├── config/
     │   ├── options.lua       # 编辑器基础选项
-    │   ├── keymaps.lua       # 全局键位 + LSP/cmp/gitsigns 共享函数
+    │   ├── keymaps.lua       # 全局键位 + LSP/gitsigns 共享函数
     │   └── lazy.lua          # lazy.nvim 初始化与全局配置
     └── plugins/              # 每个插件一个文件，由 lazy 自动导入
 ```
@@ -49,8 +49,8 @@
 
 | 插件 | 作用 | 加载方式 |
 | --- | --- | --- |
-| catppuccin/nvim | 默认主题（mocha，透明背景），集成 cmp/snacks/notify/mini 等 | priority 1000 |
-| LmanTW/themify.nvim | 主题管理器，内置 16 套主题可随时切换 | 启动 |
+| catppuccin/nvim | 默认主题（mocha，透明背景），集成 blink.cmp/snacks/notify/mini 等 | priority 1000 |
+| kanagawa.nvim / tokyonight.nvim | 两个备选主题（`:colorscheme` 临时切换） | 启动 |
 | nvim-lualine/lualine.nvim | 状态栏（模式、分支、诊断、文件名） | VimEnter |
 | akinsho/bufferline.nvim | 顶部 buffer 标签页，支持智能关闭、拖拽 | BufReadPost |
 | rcarriga/nvim-notify | 通知美化 | 启动 |
@@ -72,18 +72,15 @@
 | lukas-reineke/indent-blankline.nvim | 缩进参考线（scope 交给 mini.indentscope） | BufReadPost |
 | windwp/nvim-ts-autotag | HTML/JSX 标签自动闭合与重命名 | InsertEnter |
 | numToStr/Comment.nvim | `gcc`/`gc` 注释 | BufReadPre |
-| RRethy/vim-illuminate | 高亮光标所在词的其他出现位置 | BufReadPre |
 | kylechui/nvim-surround | `ys`/`cs`/`ds` 环绕操作 | BufReadPre |
 | akinsho/toggleterm.nvim | 浮动终端（`<C-\>`） | 按键 |
 | folke/flash.nvim | 快速跳转（按命令调用） | VeryLazy |
 | echasnovski/mini.nvim | 平滑动画、智能删 buffer、缩进范围高亮 | VeryLazy |
 | stevearc/oil.nvim | 像编辑 buffer 一样操作文件系统（`-`） | 按键 |
-| mikavilpas/yazi.nvim | Yazi 文件管理器（`:Yazi`） | VeryLazy |
-| ThePrimeagen/harpoon | 快速标记/切换文件 | VeryLazy |
 | folke/persistence.nvim | 会话保存与恢复 | BufReadPre |
 | uga-rosa/ccc.nvim | 颜色选择器（`:CccPick`） | 启动 |
 | OXY2DEV/markview.nvim | Markdown 可视化渲染 | ft=markdown |
-| iamcco/markdown-preview.nvim | 浏览器预览 Markdown（`:MarkdownPreviewToggle`） | 命令 |
+| iamcco/markdown-preview.nvim | 浏览器预览 Markdown（`<leader>mp`） | 按键 |
 | folke/todo-comments.nvim | 高亮 TODO/FIXME 并聚合到 Trouble | VeryLazy |
 | mbbill/undotree | 可视化撤销树（`<leader>uu`） | 按键 |
 | MagicDuck/grug-far.nvim | 项目级查找替换（`<leader>fR`） | 按键 |
@@ -97,7 +94,7 @@
 | folke/snacks.nvim (picker) | 文件/内容/符号/诊断等所有模糊搜索 | 启动 |
 | stevearc/aerial.nvim | 符号大纲（`<leader>cs`） | 按键 |
 | folke/trouble.nvim | 诊断/符号/引用列表 | 命令 |
-| dnlhc/glance.nvim | 定义/引用/类型定义预览 | 命令 |
+| dnlhc/glance.nvim | 声明/类型定义预览（`gD`/`gy`） | 命令 |
 
 ### LSP 与补全
 
@@ -106,9 +103,10 @@
 | williamboman/mason.nvim | LSP/工具安装器 | 命令 |
 | williamboman/mason-lspconfig.nvim | Mason 与 lspconfig 桥接，自动启用已装 server | BufReadPre |
 | neovim/nvim-lspconfig | LSP 客户端配置 | 依赖 |
-| hrsh7th/nvim-cmp + 各 source | 补全（LSP/路径/buffer/命令） | 启动 |
+| saghen/blink.cmp | 补全（LSP/路径/buffer/片段/命令），替代 nvim-cmp | InsertEnter |
 | L3MON4D3/LuaSnip + friendly-snippets | 代码片段引擎与片段库 | 启动 |
 | stevearc/conform.nvim | 保存时按文件类型格式化 | BufWritePre |
+| WhoIsSethDaniel/mason-tool-installer.nvim | 让 Mason 自动安装 conform 需要的格式化工具 | VeryLazy |
 | 内置 inlay hints | LSP 行内类型提示（自动开启 + `<leader>uh`） | LspAttach |
 
 已配置的 LSP server：`lua_ls`、`pyright`、`clangd`、`ts_ls`、`bashls`、
@@ -169,7 +167,7 @@
 | `-` | Oil 文件浏览器 |
 | `<C-\\>` | 打开或关闭浮动终端 |
 | `<` / `>`（可视模式） | 缩进并保持选中 |
-| `p`（可视模式） | 粘贴且不覆盖寄存器 |
+| `p`（可视模式） | 粘贴并替换选区；被替换内容进入 Yanky 历史，可用 `<C-p>` 找回 |
 
 ### 窗口与缓冲区
 
@@ -248,7 +246,6 @@
 | `<leader>ts` / `<leader>to` | 测试总览 / 输出 |
 | `<leader>rr` / `<leader>rt` / `<leader>rd` | Rust 运行 / 测试 / 调试（仅 Rust 文件） |
 | `<leader>re` / `<leader>rc` | Rust 解释错误 / 打开 Cargo.toml（仅 Rust 文件） |
-| `<leader>ha` / `<leader>hh` | 标记文件 / 打开标记列表 |
 | `<leader>or` / `<leader>ol` / `<leader>oo` | 运行任务 / 任务列表 / 快速操作 |
 | `<leader>us` / `<leader>uw` / `<leader>uh` / `<leader>uu` | 拼写 / 自动换行 / 行内提示 / 撤销树 |
 | `<leader>l` / `<leader>M` / `<leader>n` | Lazy / Mason / 通知历史 |

@@ -33,7 +33,11 @@ return {
     input = { enabled = true },
 
     -- 图片预览
-    image = { enabled = true },
+    image = {
+      enabled = true,
+      -- md 文档内联图片交给 image.nvim 渲染（kitty/sixel 均支持），这里关闭避免双重渲染
+      doc = { enabled = false },
+    },
 
     -- 大文件优化
     bigfile = { enabled = true },

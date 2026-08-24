@@ -13,7 +13,7 @@ map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "清除搜索高亮" })
 map("i", "jj", "<Esc>", { desc = "退出插入模式" })
 map("v", "<", "<gv", { desc = "左缩进并保持选中" })
 map("v", ">", ">gv", { desc = "右缩进并保持选中" })
-map("v", "p", '"_dP', { desc = "粘贴且不覆盖寄存器" })
+-- 可视模式 p 交给 yanky.nvim 管理；被替换的内容进历史，可用 <C-p> 找回
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "退出终端模式" })
 
 map("n", "<C-i>", "<C-w>k", { desc = "切到上方窗口" })
@@ -54,29 +54,29 @@ function M.lsp_on_attach(_, bufnr)
 
   lspmap("K", vim.lsp.buf.hover, "悬浮文档")
   lspmap("gd", vim.lsp.buf.definition, "跳转定义")
-  lspmap("gD", vim.lsp.buf.declaration, "跳转声明")
+  lspmap("gD", function()
+    -- glance.nvim 已安装时用预览窗口查看声明，否则退回 LSP 直接跳转
+    if pcall(require, "glance") then
+      vim.cmd("Glance declarations")
+    else
+      vim.lsp.buf.declaration()
+    end
+  end, "跳转声明（预览）")
   lspmap("gr", vim.lsp.buf.references, "查找引用")
   lspmap("gi", vim.lsp.buf.implementation, "跳转实现")
-  lspmap("gy", vim.lsp.buf.type_definition, "跳转类型定义")
+  lspmap("gy", function()
+    if pcall(require, "glance") then
+      vim.cmd("Glance type_definitions")
+    else
+      vim.lsp.buf.type_definition()
+    end
+  end, "跳转类型定义（预览）")
   lspmap("<leader>ca", vim.lsp.buf.code_action, "代码动作")
   map("n", "<leader>cr", function()
     return ":IncRename " .. vim.fn.expand("<cword>")
   end, { buffer = bufnr, expr = true, desc = "代码：重命名" })
   lspmap("[d", vim.diagnostic.goto_prev, "上一诊断")
   lspmap("]d", vim.diagnostic.goto_next, "下一诊断")
-end
-
-function M.cmp_mappings()
-  local cmp = require("cmp")
-
-  return cmp.mapping.preset.insert({
-    ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-    ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-/>"] = cmp.mapping.complete(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  })
 end
 
 function M.gitsigns_on_attach(bufnr)

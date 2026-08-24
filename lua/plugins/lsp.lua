@@ -29,11 +29,11 @@ return {
       local keymaps = require("config.keymaps")
       local on_attach = keymaps.lsp_on_attach
 
-      -- 统一为所有由 lspconfig 管理的 server 提供 cmp 能力与 LSP 快捷键
+      -- 统一为所有由 lspconfig 管理的 server 提供补全能力与 LSP 快捷键
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      if has_cmp then
-        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      local has_blink, blink = pcall(require, "blink.cmp")
+      if has_blink and blink.get_lsp_capabilities then
+        capabilities = blink.get_lsp_capabilities(capabilities)
       end
 
       vim.lsp.config("*", {
