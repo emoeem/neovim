@@ -47,6 +47,11 @@ map("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "下一个缓冲区" })
 map("n", "<S-Up>", "<cmd>tabprevious<cr>", { desc = "上一个标签页" })
 map("n", "<S-Down>", "<cmd>tabnext<cr>", { desc = "下一个标签页" })
 
+-- Vim 标签页（tabpage）管理：新建 / 关闭当前 / 只保留当前
+map("n", "<leader>Tn", "<cmd>tabnew<cr>", { desc = "标签页：新建" })
+map("n", "<leader>Tx", "<cmd>tabclose<cr>", { desc = "标签页：关闭当前" })
+map("n", "<leader>To", "<cmd>tabonly<cr>", { desc = "标签页：只保留当前" })
+
 function M.lsp_on_attach(_, bufnr)
   local function lspmap(lhs, rhs, desc)
     map("n", lhs, rhs, { buffer = bufnr, desc = "代码：" .. desc })

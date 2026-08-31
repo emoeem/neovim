@@ -58,7 +58,7 @@
 | stevearc/dressing.nvim | 统一 vim.ui 输入/选择弹窗 | 启动 |
 | nvim-tree/nvim-web-devicons | 文件类型图标 | 依赖 |
 | MunifTanjim/nui.nvim | UI 组件库 | 依赖 |
-| folke/snacks.nvim | 全家桶：启动页、搜索器、文件管理器、lazygit、状态列、图片预览、大文件优化等 | 启动 |
+| folke/snacks.nvim | 全家桶：启动页、搜索器、文件管理器、lazygit、状态列、图片预览、大文件优化、内置终端等 | 启动 |
 
 ### 编辑增强
 
@@ -73,7 +73,6 @@
 | windwp/nvim-ts-autotag | HTML/JSX 标签自动闭合与重命名 | InsertEnter |
 | numToStr/Comment.nvim | `gcc`/`gc` 注释 | BufReadPre |
 | kylechui/nvim-surround | `ys`/`cs`/`ds` 环绕操作 | BufReadPre |
-| akinsho/toggleterm.nvim | 浮动终端（`<C-\>`） | 按键 |
 | folke/flash.nvim | 快速跳转（按命令调用） | VeryLazy |
 | echasnovski/mini.nvim | 平滑动画、智能删 buffer、缩进范围高亮 | VeryLazy |
 | stevearc/oil.nvim | 像编辑 buffer 一样操作文件系统（`-`） | 按键 |
@@ -84,7 +83,7 @@
 | folke/todo-comments.nvim | 高亮 TODO/FIXME 并聚合到 Trouble | VeryLazy |
 | mbbill/undotree | 可视化撤销树（`<leader>uu`） | 按键 |
 | MagicDuck/grug-far.nvim | 项目级查找替换（`<leader>fR`） | 按键 |
-| stevearc/overseer.nvim | 任务运行器（`<leader>o*`） | 命令 |
+| stevearc/overseer.nvim | 任务运行器（`<leader>o*`；`<leader>rf` 多语言运行当前文件） | 命令 |
 
 ### 搜索与导航
 
@@ -125,11 +124,11 @@
 | 插件 | 作用 | 加载方式 |
 | --- | --- | --- |
 | nvim-neotest/neotest + python/rust/plenary 适配器 | 测试运行/调试/总览 | VeryLazy |
-| mfussenegger/nvim-dap | 调试协议（codelldb） | 命令 |
+| mfussenegger/nvim-dap | 调试协议（codelldb 调试 C/C++/Rust，debugpy 调试 Python） | 命令 |
 | rcarriga/nvim-dap-ui | 调试界面 | 依赖 |
 | theHamsta/nvim-dap-virtual-text | 调试时变量虚拟文本 | 依赖 |
 | Weissle/persistent-breakpoints.nvim | 断点持久化 | 依赖 |
-| jay-babu/mason-nvim-dap.nvim | 自动安装 codelldb | 依赖 |
+| jay-babu/mason-nvim-dap.nvim | 自动安装 codelldb、debugpy | 依赖 |
 | mrcjkb/rustaceanvim | Rust 专用 LSP/调试配置 | ft=rust |
 | saecki/crates.nvim | Cargo.toml 依赖版本管理 | ft=rust/toml |
 | akinsho/flutter-tools.nvim | Flutter 开发支持 | ft=dart |
@@ -144,7 +143,7 @@
 
 | 前缀 | 作用 |
 | --- | --- |
-| `<Space>` | 自定义快捷键总入口；后接 `b/c/d/f/g/h/m/o/r/s/t/u/x` 进入对应功能组 |
+| `<Space>` | 自定义快捷键总入口；后接 `b/c/d/f/g/h/m/o/r/s/t/T/u/x` 进入对应功能组 |
 | `g` | 代码导航与常用移动 |
 | `z` | 代码折叠 |
 | `[` / `]` | 跳到上一个 / 下一个诊断或 Git 修改 |
@@ -165,7 +164,7 @@
 | `jj`（插入模式） | 退出插入模式 |
 | `<Esc>` | 清除搜索高亮 |
 | `-` | Oil 文件浏览器 |
-| `<C-\\>` | 打开或关闭浮动终端 |
+| `<leader>tt` / `<C-\\>` | 打开或切换终端（当前路径） |
 | `<` / `>`（可视模式） | 缩进并保持选中 |
 | `p`（可视模式） | 粘贴并替换选区；被替换内容进入 Yanky 历史，可用 `<C-p>` 找回 |
 
@@ -199,6 +198,8 @@
 | 按键 | 作用 |
 | --- | --- |
 | `<S-Up>` / `<S-Down>` | 上一个 / 下一个标签页 |
+| `<leader>Tn` / `<leader>Tx` / `<leader>To` | 新建标签页 / 关闭当前标签页 / 只保留当前标签页 |
+| `:tabclose` | 关闭当前标签页（原生命令） |
 
 > 数字键 `1` 至 `9` 已专门用于切换顶部文件栏中的缓冲区，因此不再作为重复次数前缀使用。
 
@@ -238,12 +239,27 @@
 | `<leader>dB` / `<leader>dr` / `<leader>du` | 条件断点 / 调试交互终端 / 调试界面 |
 | `<leader>mb` / `<leader>mr` / `<leader>md` | C++ 构建 / 构建并运行 / 构建并调试 |
 
+### 多语言运行与调试
+
+| 语言 | 运行 | 调试 |
+| --- | --- | --- |
+| Python | `<leader>rf`（`python3` 运行当前文件） | `<leader>dc` 选择 debugpy 配置；测试用 `<leader>td` |
+| C/C++（CMake 项目） | `<leader>mr` 构建并运行 | `<leader>md` 构建后调试，或 `<leader>dc` 直接调试 |
+| C/C++（单文件） | `<leader>rf` 自动编译到 `/tmp` 并运行 | `<leader>dc` 选择 codelldb |
+| Rust | `<leader>rr` / `<leader>rt` / `<leader>rd`（rustaceanvim） | 同上 |
+| Shell / Lua / JS / TS / Go | `<leader>rf`（bash / lua / node / go run） | — |
+
+> `<leader>rf` 由 Overseer 提供，按当前文件类型选择解释器或编译器，在文件所在目录执行。
+> 运行/调试依赖首次启动时由 Mason 自动安装：`codelldb`（C/C++/Rust）、`debugpy`（Python）。
+> Python 测试默认使用 pytest，项目需安装 pytest，否则自动回退 unittest。
+
 ### 按需功能
 
 | 按键 | 作用 |
 | --- | --- |
 | `<leader>tr` / `<leader>tf` / `<leader>td` | 测试最近项 / 当前文件 / 调试最近项 |
 | `<leader>ts` / `<leader>to` | 测试总览 / 输出 |
+| `<leader>rf` | 运行当前文件（Python/C/C++/Shell/Lua/JS/TS/Go/Rust） |
 | `<leader>rr` / `<leader>rt` / `<leader>rd` | Rust 运行 / 测试 / 调试（仅 Rust 文件） |
 | `<leader>re` / `<leader>rc` | Rust 解释错误 / 打开 Cargo.toml（仅 Rust 文件） |
 | `<leader>or` / `<leader>ol` / `<leader>oo` | 运行任务 / 任务列表 / 快速操作 |
@@ -275,3 +291,4 @@
 - AI 补全插件已从配置中移除，如需 AI 补全可单独引入。
 - inlay hints 使用 Neovim 内置实现（0.10+），无需第三方插件。
 - 诊断/导航类功能由 Trouble、Glance、aerial 与 LSP 内置完成（Lspsaga 已移除）。
+- 终端由 snacks.nvim 内置终端提供（`<leader>tt` / `<C-\>`），toggleterm.nvim 已移除。

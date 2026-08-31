@@ -34,9 +34,10 @@ return {
       { "<leader>h", group = "文件标记" },
       { "<leader>m", group = "构建" },
       { "<leader>o", group = "任务" },
-      { "<leader>r", group = "Rust 开发" },
+      { "<leader>r", group = "运行 / Rust 开发" },
       { "<leader>s", group = "窗口" },
-      { "<leader>t", group = "测试" },
+      { "<leader>t", group = "测试 / 终端" },
+      { "<leader>T", group = "标签页" },
       { "<leader>u", group = "开关" },
       { "<leader>x", group = "诊断" },
 

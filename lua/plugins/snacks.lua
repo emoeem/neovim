@@ -23,6 +23,9 @@ return {
     -- LazyGit 集成
     lazygit = { enabled = true },
 
+    -- 内置终端（替代 toggleterm.nvim，打开/切换终端）
+    terminal = {},
+
     -- 行号列美化
     statuscolumn = { enabled = true },
 
@@ -73,6 +76,11 @@ return {
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "快捷键" },
 
     { "<leader>n", function() Snacks.notifier.show_history() end, desc = "通知历史" },
+
+    -- ── 终端 ──
+    -- 无参数调用：在 Neovim 当前工作目录打开/切换底部终端
+    { "<leader>tt", function() Snacks.terminal() end, desc = "终端（当前路径）" },
+    { "<C-\\>", function() Snacks.terminal() end, desc = "终端" },
 
     -- ── Git ──
     { "<leader>gg", function() Snacks.lazygit() end, desc = "打开 Git 管理界面" },

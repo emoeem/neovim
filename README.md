@@ -4,6 +4,13 @@
 
 完整的插件清单和维护说明见 [NVIM_CONFIG.md](NVIM_CONFIG.md)。详细的中文快捷键学习手册见 [KEYMAPS.md](KEYMAPS.md)。
 
+## 功能亮点
+
+- 多语言运行 / 测试 / 调试：Rust、Python、C/C++、Shell、Lua、JS/TS、Go
+  （`<leader>rf` 运行当前文件，`<leader>dc` 调试，`<leader>t*` 测试，`<leader>m*` CMake 构建）
+- 内置终端：`<leader>tt` 或 `<C-\>` 在当前路径打开 / 切换终端
+- Vim 标签页管理：`<leader>Tn` / `<leader>Tx` / `<leader>To`
+
 ## 安装
 
 ```bash

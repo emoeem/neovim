@@ -22,7 +22,11 @@ return {
         opts = {
           automatic_installation = true,
           handlers = {},
-          ensure_installed = { "codelldb" },
+          -- 这里的名称是 DAP 适配器名，不是 Mason 包名：
+          -- codelldb → C/C++/Rust 调试；python → Mason 自动安装 debugpy。
+          -- debugpy 装好后会自动注册 dap.adapters.python 与
+          -- dap.configurations.python（"Python: Launch file"），无需手写。
+          ensure_installed = { "codelldb", "python" },
         },
       },
     },
@@ -89,6 +93,16 @@ return {
       local function run_build(on_success)
         local cwd = vim.fn.getcwd()
         local build_dir = cwd .. "/build"
+        local has_cmake = vim.fn.filereadable(cwd .. "/CMakeLists.txt") == 1
+            or vim.fn.filereadable(build_dir .. "/CMakeCache.txt") == 1
+        if not has_cmake then
+          vim.notify(
+            "未检测到 CMake 项目（没有 CMakeLists.txt 或 build/CMakeCache.txt）。\n"
+              .. "单个 C/C++ 文件请用 <leader>rf 编译并运行。",
+            vim.log.levels.WARN
+          )
+          return
+        end
         if vim.fn.isdirectory(build_dir) == 0 then
           vim.fn.mkdir(build_dir, "p")
         end
