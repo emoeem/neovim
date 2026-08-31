@@ -4,7 +4,9 @@ return {
   -- gofmt、rustfmt 分别由 Go / Rust 工具链自带，Mason 不提供，无需列入
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    event = "VeryLazy",
+    -- 必须启动时加载：插件的 run_on_start 依赖 VimEnter 事件，
+    -- 用 VeryLazy 懒加载会在 VimEnter 之后才载入，导致自动安装从不执行。
+    lazy = false,
     dependencies = { "williamboman/mason.nvim" },
     opts = {
       ensure_installed = {
@@ -13,7 +15,13 @@ return {
         "isort",    -- Python import 排序
         "prettier", -- JS/TS/JSON/Markdown/HTML/CSS/YAML
         "shfmt",    -- Shell
-        "goimports" -- Go import 整理
+        -- Go import 整理：需要系统里有 Go 工具链才安装，否则 Mason 会报错
+        {
+          "goimports",
+          condition = function()
+            return vim.fn.executable("go") == 1
+          end,
+        },
       },
       auto_update = false,
       run_on_start = true,

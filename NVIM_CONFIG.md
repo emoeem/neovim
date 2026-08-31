@@ -105,7 +105,7 @@
 | saghen/blink.cmp | 补全（LSP/路径/buffer/片段/命令），替代 nvim-cmp | InsertEnter |
 | L3MON4D3/LuaSnip + friendly-snippets | 代码片段引擎与片段库 | 启动 |
 | stevearc/conform.nvim | 保存时按文件类型格式化 | BufWritePre |
-| WhoIsSethDaniel/mason-tool-installer.nvim | 让 Mason 自动安装 conform 需要的格式化工具 | VeryLazy |
+| WhoIsSethDaniel/mason-tool-installer.nvim | 让 Mason 自动安装 conform 需要的格式化工具（启动时检查，24 小时内不重复；goimports 仅在系统装有 Go 时安装） | 启动 |
 | 内置 inlay hints | LSP 行内类型提示（自动开启 + `<leader>uh`） | LspAttach |
 
 已配置的 LSP server：`lua_ls`、`pyright`、`clangd`、`ts_ls`、`bashls`、
@@ -283,6 +283,8 @@
 | `:Lazy clean` | 删除配置中不再引用的插件 |
 | `:Lazy update` | 更新全部插件 |
 | `:Mason` | LSP / DAP 工具管理 |
+| `:MasonUpdate` | 更新 Mason 注册表（解决"有更新但无法更新"） |
+| `:MasonToolsInstall` | 立即安装 / 补齐所有格式化工具 |
 | `:TSUpdate` | 更新 tree-sitter 解析器 |
 | `:ConformInfo` | 查看格式化工具状态 |
 
