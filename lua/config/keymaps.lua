@@ -13,8 +13,19 @@ map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "清除搜索高亮" })
 map("i", "jj", "<Esc>", { desc = "退出插入模式" })
 map("v", "<", "<gv", { desc = "左缩进并保持选中" })
 map("v", ">", ">gv", { desc = "右缩进并保持选中" })
--- 可视模式 p 交给 yanky.nvim 管理；被替换的内容进历史，可用 <C-p> 找回
-map("t", "<Esc>", "<C-\\><C-n>", { desc = "退出终端模式" })
+-- 终端输入模式：按一次 Esc 退出输入模式并关闭终端窗口
+-- （想保留窗口、只回到普通模式用于滚动/复制时，按 <C-\><C-n>）
+map("t", "<Esc>", function()
+  vim.cmd("stopinsert")
+  pcall(vim.cmd, "close")
+end, { desc = "退出并关闭终端" })
+
+-- 任何终端缓冲区（内置终端、Overseer 运行输出等）普通模式下按 q 关闭窗口
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function(args)
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = args.buf, desc = "关闭终端" })
+  end,
+})
 
 map("n", "<C-i>", "<C-w>k", { desc = "切到上方窗口" })
 map("n", "<C-j>", "<C-w>h", { desc = "切到左侧窗口" })
@@ -60,21 +71,12 @@ function M.lsp_on_attach(_, bufnr)
   lspmap("K", vim.lsp.buf.hover, "悬浮文档")
   lspmap("gd", vim.lsp.buf.definition, "跳转定义")
   lspmap("gD", function()
-    -- glance.nvim 已安装时用预览窗口查看声明，否则退回 LSP 直接跳转
-    if pcall(require, "glance") then
-      vim.cmd("Glance declarations")
-    else
-      vim.lsp.buf.declaration()
-    end
+    Snacks.picker.lsp_declarations()
   end, "跳转声明（预览）")
   lspmap("gr", vim.lsp.buf.references, "查找引用")
   lspmap("gi", vim.lsp.buf.implementation, "跳转实现")
   lspmap("gy", function()
-    if pcall(require, "glance") then
-      vim.cmd("Glance type_definitions")
-    else
-      vim.lsp.buf.type_definition()
-    end
+    Snacks.picker.lsp_type_definitions()
   end, "跳转类型定义（预览）")
   lspmap("<leader>ca", vim.lsp.buf.code_action, "代码动作")
   map("n", "<leader>cr", function()

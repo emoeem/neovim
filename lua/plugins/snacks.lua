@@ -24,7 +24,37 @@ return {
     lazygit = { enabled = true },
 
     -- 内置终端（替代 toggleterm.nvim，打开/切换终端）
-    terminal = {},
+    terminal = {
+      win = {
+        keys = {
+          -- 关闭 snacks 默认的"双击 Esc 才退出输入模式"
+          term_normal = false,
+          -- 单次 Esc：退出输入模式并关闭终端窗口
+          -- （窗口局部的键位优先级高于全局映射，写在这里保证 snacks 终端一定生效；
+          --  想保留窗口、只回到普通模式滚动/复制时，按 <C-\><C-n>）
+          esc_close = {
+            "<esc>",
+            function()
+              vim.cmd("stopinsert")
+              vim.schedule(function()
+                pcall(vim.api.nvim_win_close, 0, true)
+              end)
+            end,
+            mode = "t",
+            desc = "退出并关闭终端",
+          },
+          -- 普通模式 q 关闭终端窗口
+          q_close = {
+            "q",
+            function()
+              pcall(vim.api.nvim_win_close, 0, true)
+            end,
+            mode = "n",
+            desc = "关闭终端",
+          },
+        },
+      },
+    },
 
     -- 行号列美化
     statuscolumn = { enabled = true },

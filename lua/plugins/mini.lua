@@ -17,6 +17,27 @@ return {
     -- 智能删除 buffer（替代 bufferline 里手写的 smart_close）
     require("mini.bufremove").setup()
 
+    -- 自动括号配对（替代 nvim-autopairs）
+    require("mini.pairs").setup()
+
+    -- 环绕操作（替代 nvim-surround）
+    -- 前缀用 gs 而不是默认的 s，避免和 flash.nvim 的 s 跳转冲突：
+    --   gsa：添加环绕（如 gsaiw" 给单词加引号）
+    --   gsd：删除环绕（如 gsd" 删除引号）
+    --   gsr：替换环绕（如 gsr"' 把双引号换成单引号）
+    --   gsh：高亮环绕
+    require("mini.surround").setup({
+      mappings = {
+        add = "gsa",
+        delete = "gsd",
+        find = "gsf",
+        find_left = "gsF",
+        highlight = "gsh",
+        replace = "gsr",
+        update_n_lines = "gsn",
+      },
+    })
+
     -- 缩进范围高亮（替代 indent-blankline 的 scope）
     require("mini.indentscope").setup({
       draw = {
