@@ -89,11 +89,16 @@ return {
       sources = {
         -- 与之前 nvim-cmp 相同的优先级：LSP > 片段 > buffer > 路径
         default = { "lsp", "snippets", "buffer", "path" },
+        -- 编辑 lua 配置时追加 lazydev 源（vim.* / 插件库补全）
+        per_filetype = {
+          lua = { "lazydev", "lsp", "snippets", "buffer", "path" },
+        },
         providers = {
           lsp      = { module = "blink.cmp.sources.lsp",      name = "LSP",  score_offset = 100 },
           snippets = { module = "blink.cmp.sources.snippets", name = "Snip", score_offset = 80 },
           buffer   = { module = "blink.cmp.sources.buffer",   name = "Buf",  score_offset = 0 },
           path     = { module = "blink.cmp.sources.path",     name = "Path", score_offset = -25 },
+          lazydev  = { module = "lazydev.integrations.blink", name = "LazyDev", score_offset = 100 },
         },
       },
 

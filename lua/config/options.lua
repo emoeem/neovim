@@ -99,3 +99,12 @@ opt.completeopt = { "menuone", "noselect" }
 
 opt.conceallevel = 0      -- 不隐藏特殊字符（如 markdown 的 ** 符号完整显示）
 opt.isfname:append("@-@") -- 文件名识别包含 @ 符号（对某些框架有用）
+
+-- markview 的标题图标/复选框渲染依赖 conceallevel >= 2，
+-- 只对 markdown 文件局部开启，其他文件保持 0
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.conceallevel = 2
+  end,
+})

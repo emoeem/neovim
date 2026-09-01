@@ -38,7 +38,7 @@ return {
       {
         "<leader>cf",
         function()
-          require("conform").format({ async = true, lsp_fallback = true })
+          require("conform").format({ async = true, lsp_format = "fallback" })
         end,
         desc = "格式化当前文件",
       },
@@ -63,7 +63,7 @@ return {
 
       format_on_save = {
         timeout_ms = 500,
-        lsp_fallback = true,
+        lsp_format = "fallback",
       },
     },
   },

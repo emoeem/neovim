@@ -5,11 +5,10 @@ return {
   opts = {
     -- yank 历史存到 shada，重启后还在
     ring = { storage = "shada" },
-    -- 粘贴/复制后高亮反馈（时长 300ms）
+    -- 粘贴/复制高亮交给 tiny-glimmer（animation.lua），这里关闭避免双重高亮
     highlight = {
-      on_put = true,
-      on_yank = true,
-      timer = 300,
+      on_put = false,
+      on_yank = false,
     },
     preserve_cursor_position = { enabled = true },
   },

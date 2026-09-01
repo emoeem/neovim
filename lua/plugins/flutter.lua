@@ -9,7 +9,8 @@ return {
     config = function()
       require("flutter-tools").setup({
         lsp = {
-          color_render = true,
+          -- 颜色高亮统一由 ccc.nvim 渲染，关闭这套避免 dart 文件双重色块
+          color = { enabled = false },
         }
       })
     end,

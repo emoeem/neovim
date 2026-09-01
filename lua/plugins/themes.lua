@@ -5,12 +5,10 @@ return {
   --   :colorscheme kanagawa   /   :colorscheme tokyonight
   {
     "rebelot/kanagawa.nvim",
-    lazy = false,
-    priority = 999,
+    lazy = true,
   },
   {
     "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 999,
+    lazy = true,
   },
 }

@@ -11,9 +11,10 @@ return {
         "theHamsta/nvim-dap-virtual-text",
         opts = {},
       },
+      -- persistent-breakpoints 的 setup 在下方 config 里带参数调用，
+      -- 这里不要 opts = {}，否则 setup 会执行两次
       {
         "Weissle/persistent-breakpoints.nvim",
-        opts = {},
       },
 
       {
@@ -111,7 +112,7 @@ return {
         local stderr_data = {}
         vim.notify("Building C++ project...", vim.log.levels.INFO)
         vim.fn.jobstart({ "sh", "-c", cmd }, {
-          on_stderr_nr = function(_, data)
+          on_stderr = function(_, data)
             if data then
               table.insert(stderr_data, data)
             end

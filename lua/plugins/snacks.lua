@@ -105,7 +105,7 @@ return {
     { "<leader>fh", function() Snacks.picker.help() end, desc = "帮助文档" },
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "快捷键" },
 
-    { "<leader>n", function() Snacks.notifier.show_history() end, desc = "通知历史" },
+    { "<leader>n", "<cmd>Notifications<cr>", desc = "通知历史" },
 
     -- ── 终端 ──
     -- 无参数调用：在 Neovim 当前工作目录打开/切换底部终端

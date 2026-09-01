@@ -160,6 +160,11 @@ return {
       -- 关闭 noice 的原生弹窗，避免位置错乱/双重渲染
       popupmenu = { enabled = false },
 
+      -- LSP 进度提示交给 fidget.nvim，关闭 noice 这套避免双重提示
+      lsp = {
+        progress = { enabled = false },
+      },
+
       views = {
         cmdline_popup = {
           position = {
